@@ -19,5 +19,4 @@ public class UserTestService {
     public User getUserById(String id){
         return userMapper.selectByPrimaryKey(id);
     }
-
 }
