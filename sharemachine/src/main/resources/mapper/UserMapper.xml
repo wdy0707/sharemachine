@@ -5,6 +5,14 @@
     <id column="uid" property="uid" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="passwd" property="passwd" jdbcType="VARCHAR" />
+    <collection property="roles" ofType="top.wdy07.sharemachine.entity.Role">
+      <id property="rid" column="rid"/>
+      <result property="name" column="role_name"/>
+      <collection property="permissions" ofType="top.wdy07.sharemachine.entity.Permission">
+        <id property="pid" column="pid"/>
+        <result property="name" column="permission_name"/>
+      </collection>
+    </collection>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -103,6 +111,7 @@
     values (#{uid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}
       )
   </insert>
+
   <insert id="insertSelective" parameterType="top.wdy07.sharemachine.entity.User" >
     insert into tb_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -178,4 +187,14 @@
       passwd = #{passwd,jdbcType=VARCHAR}
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
+
+  <select id="findByUsername" resultMap="BaseResultMap" parameterType="string" >
+           SELECT *
+           FROM tb_user u,tb_roler r,tb_permission p
+           WHERE u.rid=r.rid
+           AND p.rid=r.rid
+           AND u.username=#{username}
+    </select>
+
+
 </mapper>
