@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.wdy07.sharemachine.dao.DeviceAndTaskDao">
+
+    <insert id="postDevice" parameterType="Device">
+		insert into  tb_device (did,cpu,memSize,state) values (#{did},#{cpu},#{memsize},#{state})
+</insert>
+
+    <select id="getTaskCid" resultType="HashMap">
+		select * from tb_task_cat
+</select>
+
+    <select id="getUserTaskList" resultType="HashMap">
+		select * from tb_task where uid=#{uid}
+</select>
+
+    <insert id="postTaskInfo" parameterType="Task">
+		insert into  tb_task (uid,tid,url,port,username,password) values (#{uid},#{id},#{url},#{port},#{username},#{password})
+</insert>
+
+
+    <update id="postDeviceState" parameterType="String">
+		update tb_task set state = '1' where did = #{did}
+</update>
+    <select id="getTerminaledTask" resultType="String">
+		select tb_task.tid ,tb_task_cat.cname from tb_task
+		inner join tb_task_cat on tb_task.cid = tb_task_cat.cid
+		where tb_task.did=#{did}
+</select>
+
+</mapper>

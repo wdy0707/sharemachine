@@ -79,10 +79,16 @@ public class AuthRealm extends AuthorizingRealm {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
         //获取前端输入的用户名
         String userName  = usernamePasswordToken.getUsername();
+        System.out.println(userName);
         //根据用户名查询数据库中对应的记录
         User user = userService.findByUsername(userName);
         System.out.println("2222222222222");
-        System.out.println(user.toString());
+        if(user != null) {
+            System.out.println(user.toString());
+        }
+        else {
+            System.out.println("用户不存在");
+        }
         //当前realm对象的name
         String realmName = getName();
         //盐值

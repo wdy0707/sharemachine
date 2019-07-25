@@ -4,8 +4,11 @@ import com.alibaba.fastjson.JSON;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.wdy07.sharemachine.dao.DeviceAndTaskDao;
 import top.wdy07.sharemachine.entity.User;
 import top.wdy07.sharemachine.mapper.UserMapper;
+
+import java.util.List;
 
 /**
  * @author wdy
@@ -16,6 +19,8 @@ public class UserTestService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private DeviceAndTaskDao deviceAndTaskDao;
     public void insert(User user){
         userMapper.insert(user);
     }
@@ -26,5 +31,12 @@ public class UserTestService {
 
     public User findByUsername(String username) {
         return userMapper.findByUsername(username);
+    }
+    public String getUserTaskList(String uid){
+        System.out.println(uid+"------------------------");
+        System.out.println(deviceAndTaskDao.getUserTaskList("3").toString());
+        return deviceAndTaskDao.getUserTaskList(uid).toString();
+
+//        return JSON.toJSONString(deviceAndTaskDao.getUserTaskList(uid));
     }
 }

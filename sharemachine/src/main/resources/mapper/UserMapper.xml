@@ -190,10 +190,12 @@
 
   <select id="findByUsername" resultMap="BaseResultMap" parameterType="string" >
            SELECT *
-           FROM tb_user u,tb_roler r,tb_permission p
-           WHERE u.rid=r.rid
-           AND p.rid=r.rid
-           AND u.username=#{username}
+--            FROM tb_user u,tb_roler r,tb_permission p
+--            WHERE u.rid=r.rid
+--            AND p.rid=r.rid
+--            AND u.username=#{username}
+          FROM tb_user
+           WHERE  username = #{username}
     </select>
 
 

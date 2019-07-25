@@ -16,6 +16,7 @@ import top.wdy07.sharemachine.service.UserTestService;
 import top.wdy07.sharemachine.shiro.EncryptUtils;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class TestController {
@@ -33,6 +34,7 @@ public class TestController {
     public String success(User loginUser, Model model) {
         System.out.println(loginUser.toString());
         loginUser.setPasswd(EncryptUtils.encrypt(loginUser.getUsername(),loginUser.getPasswd()).toString());
+        System.out.println(loginUser.toString());
         userTestService.insert(loginUser);
         return "registSuccess";
     }
@@ -52,6 +54,11 @@ public class TestController {
             subject.login(token);
             session.setAttribute("user", subject.getPrincipal());
             model.addAttribute("username",username);
+            User userid = userTestService.findByUsername(username);
+            model.addAttribute("uid",userid.getUid());
+            System.out.println(userid.getUid());
+            String list = userTestService.getUserTaskList(userid.getUid());
+            model.addAttribute("list",list);
             return "index";
         } catch (Exception e) {
             return "login";
@@ -111,5 +118,11 @@ public class TestController {
             return resultUser;
         }
         return "no such User";
+    }
+
+    @RequestMapping("/getUserTaskList")
+    public String getUserTaskList(String uid,Model model) {
+        return userTestService.getUserTaskList(uid);
+//        model.addAttribute(loginUser);
     }
 }
