@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SharemachineApplication {
 
     public static void main(String[] args) {
+        //
         SpringApplication.run(SharemachineApplication.class, args);
     }
 
